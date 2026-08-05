@@ -1,10 +1,12 @@
-"""
-URLs for openedx_upstream_sync_ext.
-"""
-from django.urls import re_path  # pylint: disable=unused-import
-from django.views.generic import TemplateView  # pylint: disable=unused-import
+"""CMS API URLs for openedx_upstream_sync_ext."""
+
+from django.urls import path
+
+from .views import AuthoringConfigView
 
 urlpatterns = [
-    # TODO: Fill in URL patterns and views here.
-    # re_path(r'', TemplateView.as_view(template_name="openedx_upstream_sync_ext/base.html")),
+    # The plugin framework mounts this module below
+    # ``/api/contentstore/v2/``.  The final URL is therefore
+    # ``/api/contentstore/v2/config/``.
+    path('config/', AuthoringConfigView.as_view(), name='authoring-config'),
 ]

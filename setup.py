@@ -143,6 +143,11 @@ setup(
 
     include_package_data=True,
     install_requires=load_requirements('requirements/base.in'),
+    entry_points={
+        'cms.djangoapp': [
+            'openedx_upstream_sync_ext = openedx_upstream_sync_ext.apps:OpenedxUpstreamSyncExtConfig',
+        ],
+    },
     python_requires=">=3.11",
     license="AGPL 3.0",
     zip_safe=False,
