@@ -78,12 +78,15 @@ class OpenedxUpstreamSyncExtConfig(AppConfig):
 
         # The default is false so installing the plugin alone is not enough to
         # alter existing course behavior.
-        if not getattr(settings, 'FEATURES', {}).get('ENABLE_UPSTREAM_SYNC_FOR_CUSTOMIZABLE_FIELDS', False):
+        feature_flags = getattr(settings, 'FEATURES', {})
+        if not feature_flags.get('ENABLE_UPSTREAM_SYNC_FOR_CUSTOMIZABLE_FIELDS', False):
             return
 
         # Import lazily: this package can be tested as a normal Django app,
         # while the CMS-only dependency exists only in an Open edX runtime.
-        from cms.lib.xblock.upstream_sync import UpstreamSyncMixin
+        from cms.lib.xblock.upstream_sync import (  # pylint: disable=import-error,import-outside-toplevel
+            UpstreamSyncMixin,
+        )
 
         # Save the method currently installed by edx-platform.  We call this
         # saved method from the wrapper below so the platform's existing field
@@ -98,7 +101,7 @@ class OpenedxUpstreamSyncExtConfig(AppConfig):
         if getattr(original_get_customizable_fields, '_openedx_upstream_sync_ext', False):
             return
 
-        def get_customizable_fields(cls):
+        def get_customizable_fields(_cls):
             # Start with the platform's current mapping so future upstream
             # fields remain intact and this plugin only changes the fields it
             # explicitly supports.
@@ -119,5 +122,6 @@ class OpenedxUpstreamSyncExtConfig(AppConfig):
 
         # Mark the replacement function so a later ready() call can recognize
         # that this plugin has already patched the platform method.
-        get_customizable_fields._openedx_upstream_sync_ext = True
+        marker_name = '_openedx_upstream_sync_ext'
+        setattr(get_customizable_fields, marker_name, True)
         UpstreamSyncMixin.get_customizable_fields = classmethod(get_customizable_fields)

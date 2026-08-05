@@ -1,5 +1,7 @@
 """
-Extends Open edX upstream synchronization to support configurable customizable fields, including synchronizing Library component values such as problem scores.
+Extend Open edX upstream synchronization with configurable customizable fields.
+
+The extension includes Library component values such as problem scores.
 
 The package is installed as a CMS Django plugin.  It intentionally keeps the
 feature behind a Django ``FEATURES`` flag so deployments can install the

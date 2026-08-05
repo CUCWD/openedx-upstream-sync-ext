@@ -131,7 +131,11 @@ CHANGELOG = open(os.path.join(os.path.dirname(__file__), 'CHANGELOG.rst'), encod
 setup(
     name='openedx-upstream-sync-ext',
     version=VERSION,
-    description="""Extends Open edX upstream synchronization to support configurable customizable fields, including synchronizing Library component values such as problem scores.""",
+    description=(
+        "Extends Open edX upstream synchronization to support configurable "
+        "customizable fields, including synchronizing Library component values "
+        "such as problem scores."
+    ),
     long_description=README + '\n\n' + CHANGELOG,
     author='Zachary Trabookis',
     author_email='ztraboo@clemson.edu',

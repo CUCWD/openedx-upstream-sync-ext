@@ -27,8 +27,9 @@ class AuthoringConfigView(APIView):
         ``FEATURES`` may be absent in the standalone test settings used by
         this package, so use ``get`` with a false default for portability.
         """
+        feature_flags = getattr(settings, 'FEATURES', {})
         return Response({
-            'enable_upstream_sync_for_customizable_fields': settings.FEATURES.get(
+            'enable_upstream_sync_for_customizable_fields': feature_flags.get(
                 'ENABLE_UPSTREAM_SYNC_FOR_CUSTOMIZABLE_FIELDS',
                 False,
             ),
