@@ -1,6 +1,8 @@
 # Core dependencies for installing other packages
 -c constraints.txt
 
-pip
+# pip-tools 7.5.3 currently fails with pip 26 because pip removed an
+# allow_editables argument that pip-tools still passes.
+pip<26
 setuptools
 wheel
