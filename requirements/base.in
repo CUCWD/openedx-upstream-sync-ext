@@ -2,6 +2,11 @@
 -c constraints.txt
 
 Django             # Web application framework
+djangorestframework  # REST API support for the configuration endpoint
+XBlock             # XBlock base classes and field definitions used by the mixin
+
+# edx-django-utils 5.14.1 adds FrontendMonitoringMiddleware
+edx-django-utils>=5.14.1             # Utilities for cache, monitoring, and plugins
 
 
 openedx-atlas

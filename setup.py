@@ -131,7 +131,11 @@ CHANGELOG = open(os.path.join(os.path.dirname(__file__), 'CHANGELOG.rst'), encod
 setup(
     name='openedx-upstream-sync-ext',
     version=VERSION,
-    description="""Extends Open edX upstream synchronization to support configurable customizable fields, including synchronizing Library component values such as problem scores.""",
+    description=(
+        "Extends Open edX upstream synchronization to support configurable "
+        "customizable fields, including synchronizing Library component values "
+        "such as problem scores."
+    ),
     long_description=README + '\n\n' + CHANGELOG,
     author='Zachary Trabookis',
     author_email='ztraboo@clemson.edu',
@@ -143,6 +147,11 @@ setup(
 
     include_package_data=True,
     install_requires=load_requirements('requirements/base.in'),
+    entry_points={
+        'cms.djangoapp': [
+            'openedx_upstream_sync_ext = openedx_upstream_sync_ext.apps:OpenedxUpstreamSyncExtConfig',
+        ],
+    },
     python_requires=">=3.11",
     license="AGPL 3.0",
     zip_safe=False,
