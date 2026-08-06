@@ -9,4 +9,4 @@ package without changing synchronization behavior until they explicitly opt
 in.
 """
 
-__version__ = '0.1.0'
+__version__ = '0.1.1'
