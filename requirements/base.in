@@ -1,12 +1,6 @@
-# Core requirements for using this application
--c constraints.txt
-
-Django             # Web application framework
-djangorestframework  # REST API support for the configuration endpoint
-XBlock             # XBlock base classes and field definitions used by the mixin
-
-# edx-django-utils 5.14.1 adds FrontendMonitoringMiddleware
-edx-django-utils>=5.14.1             # Utilities for cache, monitoring, and plugins
-
-
-openedx-atlas
+# Runtime dependency versions are supplied by the host edx-platform environment.
+# Do not include development constraints or compiled locks in package metadata.
+Django
+djangorestframework
+XBlock
+edx-django-utils

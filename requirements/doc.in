@@ -1,10 +1,14 @@
 # Requirements for documentation validation
 -c constraints.txt
 
--r test.txt               # Core and testing dependencies for this package
+-r test.in               # Core and testing dependencies for this package
 
 doc8                      # reStructuredText style checker
 sphinx-book-theme         # Common theme for all Open edX projects
-twine                     # Validates README.rst for usage on PyPI
+# Twine 7 requires packaging>=26.1; Ulmo provides packaging 25.0.
+twine<7                   # Validates README.rst for usage on PyPI
 build                     # Needed to build the wheel for twine check
 Sphinx                    # Documentation builder
+
+# Match the Ulmo runtime for standalone checks.
+Django==5.2.11
