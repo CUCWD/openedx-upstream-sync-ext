@@ -36,23 +36,19 @@ docs: ## generate Sphinx HTML documentation, including API docs
 PIP_COMPILE = pip-compile $(PIP_COMPILE_OPTS)
 
 compile-requirements: ## compile the requirements/*.txt files with the latest packages satisfying requirements/*.in
-	# Bootstrap pip-tools because generated requirements/*.txt files may not be
-	# present in a clean checkout.
-	# pip-tools 7.5.3 is not compatible with pip 26 yet.
-	pip install -q 'pip<26' 'pip-tools==7.5.3'
+	# Bootstrap the committed Ulmo-compatible installer and compiler versions.
+	pip install -qr requirements/pip.txt
+	pip install -qr requirements/pip-tools.txt
 	pip-compile -v ${COMPILE_OPTS} --allow-unsafe --rebuild -o requirements/pip.txt requirements/pip.in
 	pip-compile -v ${COMPILE_OPTS} -o requirements/pip-tools.txt requirements/pip-tools.in
 	pip install -qr requirements/pip.txt
 	pip install -qr requirements/pip-tools.txt
-	$(PIP_COMPILE) -o requirements/base.txt requirements/base.in
-	$(PIP_COMPILE) -o requirements/test.txt requirements/test.in
+	# base.txt and test.txt remain references to their .in files.
+	# Runtime pins belong to edx-platform; tox selects the test Django version.
 	$(PIP_COMPILE) -o requirements/doc.txt requirements/doc.in
 	$(PIP_COMPILE) -o requirements/quality.txt requirements/quality.in
 	$(PIP_COMPILE) -o requirements/ci.txt requirements/ci.in
 	$(PIP_COMPILE) -o requirements/dev.txt requirements/dev.in
-	# Let tox control the Django version for tests
-	sed '/^[dD]jango==/d' requirements/test.txt > requirements/test.tmp
-	mv requirements/test.tmp requirements/test.txt
 
 upgrade: ## update the requirements/*.txt files with the latest packages satisfying requirements/*.in
 	pip install -qr requirements/pip-tools.txt
